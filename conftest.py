@@ -1,6 +1,11 @@
 import pytest
 import requests
 import json
+from datetime import datetime
+import allure
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 
 # Define a fixture to set up the base URL for your API
 @pytest.fixture
@@ -69,12 +74,16 @@ def make_api_request(base_url, auth_token):
         return response
 
     return _make_api_request
-#In your test functions, you can then use these fixtures:
 
-#python
-#Copy code
-def test_api_functionality(setup, make_api_request):
-    # Your test code here
-    response = make_api_request('endpoint', method='get')
-    assert response.status_code == 200
-    # Add more assertions as needed
+
+@pytest.fixture(scope="function")
+def driver():
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+    driver.maximize_window()
+    yield driver
+    attach = driver.get_screenshot_as_png()
+    allure.attach(attach, name=f"Screenshot {datetime.today()}", attachment_type=allure.attachment_type.PNG)
+    driver.quit()
+
+
+

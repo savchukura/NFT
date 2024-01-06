@@ -10,5 +10,6 @@ Faker.seed()
 def generated_person():
     yield Person(
         firstname=faker_en.first_name(),
-        lastname=faker_en.last_name()
+        lastname=faker_en.last_name(),
+        email=faker_en.email()
     )

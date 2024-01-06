@@ -1,3 +1,9 @@
 pytest==7.4.3
 requests-toolbelt==1.0.0
 Faker==21.0.0
+requests~=2.31.0
+selenium==4.16.0
+webdriver-manager==4.0.1
+pyotp~=2.9.0
+allure-pytest==2.13.2
+allure-python-commons==2.13.2
